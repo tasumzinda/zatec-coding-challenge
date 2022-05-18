@@ -1,0 +1,162 @@
+swagger: '2.0'
+info:
+  title: Coding Challenge API
+  description: Provides an interface between the UI and relevant services
+  version: "1.0.0"
+# the domain of the service
+host: com.zatec.coding.challenge.controller
+# array of all schemes that this API supports
+schemes:
+  - https
+# will be prefixed to all paths
+basePath: /challenge
+produces:
+  - application/json
+paths:
+  /chuck/categories:
+    get:
+      summary: Returns a list of chuck categories
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              type: string
+
+  /chuck/{category}:
+    get:
+      summary: Returns random joke
+      parameters:
+        - name: category
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ChuckResult'
+
+  /swapi/people:
+    get:
+      summary: Returns a list of Star Wars people
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/People'
+
+  /search:
+    get:
+      summary: Returns search results
+      parameters:
+        - name: query
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SearchResult'
+definitions:
+  People:
+    type: object
+    properties:
+      count:
+        type: integer
+      next:
+        type: string
+      previous:
+        type: string
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Result'
+
+  Result:
+    type: object
+    properties:
+      name:
+        type: string
+      height:
+        type: string
+      mass:
+        type: string
+      hair_color:
+        type: string
+      skin_color:
+        type: string
+      eye_color:
+        type: string
+      birth_year:
+        type: string
+      gender:
+        type: string
+      homeworld:
+        type: string
+      films:
+        type: array
+        items:
+          type: string
+      species:
+        type: array
+        items:
+          type: string
+      vehicles:
+        type: array
+        items:
+          type: string
+      starships:
+        type: array
+        items:
+          type: string
+      created:
+        type: string
+      edited:
+        type: string
+      url:
+        type: string
+
+  ChuckSearchResultResponse:
+    type: object
+    properties:
+      total:
+        type: integer
+      result:
+        type: array
+        items:
+          $ref: '#/definitions/ChuckResult'
+
+  ChuckResult:
+    type: object
+    properties:
+      categories:
+        type: array
+        items:
+          type: string
+      created_at:
+        type: string
+      icon_url:
+        type: string
+      id:
+        type: string
+      updated_at:
+        type: string
+      url:
+        type: string
+      value:
+        type: string
+
+  SearchResult:
+    type: object
+    properties:
+      swapiEndPoint:
+        type: string
+      chuckEndPoint:
+        type: string
+      chuckResult:
+        $ref: '#/definitions/ChuckSearchResultResponse'
+      swapiResult:
+        $ref: '#/definitions/People'

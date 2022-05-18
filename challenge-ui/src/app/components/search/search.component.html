@@ -1,0 +1,120 @@
+<style>
+    h2 {
+      margin: 8px 0;
+    }
+  
+    p {
+      margin: 0;
+    }
+  
+    .content {
+      display: flex;
+      margin: 82px auto 32px;
+      padding: 0 16px;
+      max-width: 960px;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16px;
+    }
+  
+    .card {
+      all: unset;
+      border-radius: 4px;
+      border: 1px solid #eee;
+      background-color: #0583D2;
+      height: 40px;
+      width: 200px;
+      margin: 0 8px 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s ease-in-out;
+      line-height: 24px;
+    }
+  
+    .card.card-small {
+      height: 16px;
+      width: 168px;
+      margin-top: 3px;
+      cursor: pointer;
+    }
+  
+    /* Responsive Styles */
+    @media screen and (max-width: 767px) {
+      .card-container > *:not(.circle-link) ,
+      .terminal {
+        width: 100%;
+      }
+    }
+  </style>
+  <div class="card-container">
+    <mat-form-field class="full-width" appearance="outline" style="width: 80%;">
+        <mat-label>Search Here</mat-label>
+        <input matInput placeholder="Search Here..." name="name" [(ngModel)]="searchExp">
+    </mat-form-field>
+    <button class="card card-small" tabindex="0" (click)="search()">
+        <span>Search</span>
+      </button>
+  </div>
+  <br/>
+  <div class="example-container" *ngIf="swapiResult?.count! > 0">
+    <span style="margin-left: 20px;"><strong>Endpoint: {{searchResult?.swapiEndPoint}}</strong></span>
+    <mat-table #table [dataSource]="peopleSource">
+  
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.name}} </mat-cell>
+      </ng-container>
+  
+      <!-- Height Column -->
+      <ng-container matColumnDef="height">
+        <mat-header-cell *matHeaderCellDef> Height </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.height}} </mat-cell>
+      </ng-container>
+  
+      <!-- Hair Color Column -->
+      <ng-container matColumnDef="hair_color">
+        <mat-header-cell *matHeaderCellDef> Hair Color </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.hair_color}} </mat-cell>
+      </ng-container>
+  
+      <!-- Skin Color Column -->
+      <ng-container matColumnDef="skin_color">
+        <mat-header-cell *matHeaderCellDef> Skin Color </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.skin_color}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedPeopleColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedPeopleColumns;"></mat-row>
+    </mat-table>
+  </div>
+<br/>
+  <div class="example-container" *ngIf="chuckResult?.total! > 0">
+    <span style="margin-left: 20px;"><strong>Endpoint: {{searchResult?.chuckEndPoint}}</strong></span>
+    <mat-table #jokeTable [dataSource]="chuckSource">
+  
+      <!-- Url Column -->
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef> Url </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.url}} </mat-cell>
+      </ng-container>
+  
+      <!-- Joke Column -->
+      <ng-container matColumnDef="value">
+        <mat-header-cell *matHeaderCellDef> Joke </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element?.value}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedChuckColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedChuckColumns;"></mat-row>
+    </mat-table>
+  </div>
